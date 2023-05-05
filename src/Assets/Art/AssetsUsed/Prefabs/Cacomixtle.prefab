@@ -98,7 +98,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2062684184276122330}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &8453373681198099803
 SkinnedMeshRenderer:
@@ -262,7 +262,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258634795555358946}
-  m_Material: {fileID: 13400000, guid: ef229c87dbc0d4aa38cb2ccbe90d559b, type: 2}
+  m_Material: {fileID: 13400000, guid: db82ce0fd3fae404ba402ab7ad574073, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1074,10 +1074,10 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 5899754310140075772}
   - {fileID: 3320096917608670687}
   - {fileID: 1329683736803187101}
   - {fileID: 7630631334112997714}
-  - {fileID: 5899754310140075772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1321,14 +1321,14 @@ MonoBehaviour:
   _coyoteTime: 0.3
   _jumpVelocityFalloff: 5
   _fallMultiplier: 8
-  groundCheck: {fileID: 5899754310140075772}
-  groundRadius: 0.1
-  whatIsGround:
+  _groundCheck: {fileID: 0}
+  _groundRadius: 0.1
+  _whatIsGround:
     serializedVersion: 2
-    m_Bits: 256
-  whatIsGrabbable:
+    m_Bits: 0
+  _whatIsGrabbable:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   _plantGrabSounds:
   - {fileID: 8300000, guid: 7c29264fe45fd29478750108cc53be8e, type: 3}
   - {fileID: 8300000, guid: 8cd0cb4e686add4488b8479057be122f, type: 3}
@@ -2738,7 +2738,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2062684184276122330}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5929099575418980403
 GameObject:
@@ -2961,7 +2961,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2062684184276122330}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &4045761291554790010
 SphereCollider:
@@ -3568,7 +3568,7 @@ Transform:
   m_Children:
   - {fileID: 7228015820728171781}
   m_Father: {fileID: 2062684184276122330}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &8198979050518844246
 GameObject:
