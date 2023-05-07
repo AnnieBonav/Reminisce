@@ -69,6 +69,7 @@ public class CharacterController : MonoBehaviour
             _groundCheck = gameObject.transform.GetChild(0).GetComponent<Transform>();
         }
 
+        // TODO: Check if GameStateManager is needed
         GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
 
         // Grabbing objects
@@ -76,10 +77,11 @@ public class CharacterController : MonoBehaviour
         Popup.LeftPopup += RemoveCollidingPopup;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         Popup.EnteredPopup -= SetCollidingPopup;
         Popup.LeftPopup -= RemoveCollidingPopup;
+        GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void SetCollidingPopup(string text) // Do not really use it
@@ -90,11 +92,6 @@ public class CharacterController : MonoBehaviour
     private void RemoveCollidingPopup()
     {
         _isCollidingPopup = false;
-    }
-
-    void OnDestroy()
-    {
-        GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void OnGameStateChanged(GameState newGameState)
@@ -167,6 +164,7 @@ public class CharacterController : MonoBehaviour
     {
         // Move direction relative to isometric camera
         _moveDirection = _movement.x * _camera.transform.right + _movement.z * _camera.transform.forward;
+        _moveDirection.y = 0;
     }
 
     void HandleGrounding()
@@ -188,13 +186,13 @@ public class CharacterController : MonoBehaviour
             _moveDirection.y = _jumpForce;
             //_rb.AddForce(new Vector3(0, _jumpForce, 0));
 
-            playSoundEffect(_jumpSounds);
+            PlaySoundEffect(_jumpSounds);
         }
         else if (!_isJumpPressed && _isJumping && _isGrounded)
         {
             _isJumping = false;
 
-            playSoundEffect(_jumpFallSounds);
+            PlaySoundEffect(_jumpFallSounds);
         }
 
         // Fall faster and allow small jumps. _jumpVelocityFalloff is the point at which we start adding extra gravity. Using 0 causes floating
@@ -205,7 +203,7 @@ public class CharacterController : MonoBehaviour
     }
 
     // Sound Effect Handler
-    public void playSoundEffect(AudioClip[] sounds)
+    public void PlaySoundEffect(AudioClip[] sounds)
     {
         _audioSource.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
         _audioSource.volume = UnityEngine.Random.Range(1 - _volumeChangeMultiplier, 1);
@@ -232,26 +230,11 @@ public class CharacterController : MonoBehaviour
         CheckInteractPopup();
     }
 
-    // Maybe will need to be generalized?
     private void CheckInteractPopup()
     {
         if (_isCollidingPopup)
         {
-            GrabbedObject.Invoke();
+            GrabbedObject?.Invoke();
         }
-    }
-
-    public void OnCollisionStay(Collision collidedObject)
-    {
-        //Debug.Log(collidedObject.collider.name);
-        /* if (collidedObject.collider.CompareTag("Grabbable"))
-        {
-            //Debug.Log("here");
-        }*/
-    }
-
-    void GrabObject()
-    {
-
     }
 }

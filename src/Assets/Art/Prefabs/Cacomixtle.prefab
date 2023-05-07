@@ -1054,6 +1054,7 @@ GameObject:
   - component: {fileID: 5899754308491279442}
   - component: {fileID: 3024242820019335438}
   - component: {fileID: 5899754308491279441}
+  - component: {fileID: 8953314061153579923}
   m_Layer: 7
   m_Name: Cacomixtle
   m_TagString: Player
@@ -1313,10 +1314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ccd9b3b993a47c6884231773c2474d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 8
-  _turnSpeed: 10
+  _speed: 10
+  _turnSpeed: 8
   _runSpeedMultiplier: 2
-  _jumpForce: 20
+  _jumpForce: 80
   _coyoteTime: 0.3
   _jumpVelocityFalloff: 5
   _fallMultiplier: 8
@@ -1337,6 +1338,28 @@ MonoBehaviour:
   _jumpFallSounds:
   - {fileID: 8300000, guid: a9112efa670aa6445827643c60d19346, type: 3}
   - {fileID: 8300000, guid: bfcf700009365fb47a66472115888594, type: 3}
+--- !u!114 &8953314061153579923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723736242642247776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95120ee03bfa9fa48b943fee6c5e228c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _presentMirrorPrefab: {fileID: 1632525444138947993, guid: cec0f502cd47c974f8f03810f73c34ca,
+    type: 3}
+  _pastMirrorPrefab: {fileID: 1632525444138947993, guid: 6af24c264c68aaf428546bda1954164c,
+    type: 3}
+  _presentSkybox: {fileID: 2100000, guid: d18ea7e0474aa0e46be56beb6d04bffd, type: 2}
+  _pastSkybox: {fileID: 2100000, guid: a87244901356ade49a8934e8d0efeaf9, type: 2}
+  _presentWorldTransform: {fileID: 0}
+  _pastWorldTransform: {fileID: 0}
+  _distanceToMirror: 2
+  _startingTime: 0
 --- !u!1 &1757882217609057082
 GameObject:
   m_ObjectHideFlags: 0
