@@ -386,28 +386,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6499881140804385898, guid: 5823690c224c24f8182f562b994562f9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8836851982520650714, guid: 5823690c224c24f8182f562b994562f9,
         type: 3}
       propertyPath: _popupSystem
       value: 
       objectReference: {fileID: 756098412}
-    - target: {fileID: 8836851982520650714, guid: 5823690c224c24f8182f562b994562f9,
-        type: 3}
-      propertyPath: _levelLinkedTo
-      value: None
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836851982520650714, guid: 5823690c224c24f8182f562b994562f9,
-        type: 3}
-      propertyPath: whatIsGrabbable.m_Bits
-      value: 192
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3839455508929414376, guid: 5823690c224c24f8182f562b994562f9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5823690c224c24f8182f562b994562f9, type: 3}
 --- !u!1001 &1243889277
 PrefabInstance:

@@ -47,7 +47,7 @@ public class CharacterController : MonoBehaviour
     bool _isGrounded;
     bool _isJumpPressed;
     bool _isGrabPressed;
-    bool _isJumping;
+    bool _isJumping = false;
     private float _timeLeftGrounded = -10f;
 
     bool _isDashPressed;
@@ -167,21 +167,26 @@ public class CharacterController : MonoBehaviour
     {
         // Move direction relative to isometric camera
         _moveDirection = _movement.x * _camera.transform.right + _movement.z * _camera.transform.forward;
-        _moveDirection.y = 0;
     }
 
     void HandleGrounding()
     {
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundRadius, _whatIsGround);
+        print("Is gorunded: " + _isGrounded);
+    }
+
+    public void OnJump(InputValue value)
+    {
+        _isJumpPressed = value.isPressed;
     }
 
     void HandleJump()
     {
-        // Jump
         if (!_isJumping && _isJumpPressed && (_isGrounded || Time.time < _timeLeftGrounded + _coyoteTime))
         {
             _isJumping = true;
             _moveDirection.y = _jumpForce;
+            //_rb.AddForce(new Vector3(0, _jumpForce, 0));
 
             playSoundEffect(_jumpSounds);
         }
@@ -214,11 +219,6 @@ public class CharacterController : MonoBehaviour
         _movement = new Vector3(inputVector.x, 0, inputVector.y).normalized;
 
         _idleTime = 0f;
-    }
-
-    public void OnJump(InputValue value)
-    {
-        _isJumpPressed = value.isPressed;
     }
 
     public void OnDash(InputValue value)
