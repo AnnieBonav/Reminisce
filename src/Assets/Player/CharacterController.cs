@@ -1,15 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
+    public static event Action GrabbedObject;
+
     [Header("Moving")]
-    [SerializeField] float _speed = 0.6f;
+    [SerializeField] float _speed = 8f;
     [SerializeField] float _turnSpeed = 10f;
     [SerializeField] float _runSpeedMultiplier = 2f;
 
     [Header("Jumping")]
-    [SerializeField] float _jumpForce = 12f;
+    [SerializeField] float _jumpForce = 20f;
     [SerializeField] private float _coyoteTime = 0.3f;
     [SerializeField] float _jumpVelocityFalloff = 5f;
     [SerializeField] float _fallMultiplier = 8f;
@@ -41,8 +44,6 @@ public class Movement : MonoBehaviour
     float _turnSmoothVelocity;
     float _movementSmoothing;
 
-    bool _dialogueOpened = false;
-    bool _grabbedObject;
     bool _isGrounded;
     bool _isJumpPressed;
     bool _isGrabPressed;
@@ -52,6 +53,10 @@ public class Movement : MonoBehaviour
     bool _isDashPressed;
     float _idleTime;
 
+    private GameObject _grabbedObject;
+
+    // Grabbing 
+    bool _isCollidingPopup;
 
     void Awake()
     {
@@ -65,6 +70,26 @@ public class Movement : MonoBehaviour
         }
 
         GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
+
+        // Grabbing objects
+        Popup.EnteredPopup += SetCollidingPopup;
+        Popup.LeftPopup += RemoveCollidingPopup;
+    }
+
+    private void OnDisable()
+    {
+        Popup.EnteredPopup -= SetCollidingPopup;
+        Popup.LeftPopup -= RemoveCollidingPopup;
+    }
+
+    private void SetCollidingPopup(string text) // Do not really use it
+    {
+        _isCollidingPopup = true;
+    }
+
+    private void RemoveCollidingPopup()
+    {
+        _isCollidingPopup = false;
     }
 
     void OnDestroy()
@@ -177,13 +202,11 @@ public class Movement : MonoBehaviour
     // Sound Effect Handler
     public void playSoundEffect(AudioClip[] sounds)
     {
-        _audioSource.clip = sounds[Random.Range(0, sounds.Length)];
-        _audioSource.volume = Random.Range(1 - _volumeChangeMultiplier, 1);
-        _audioSource.pitch = Random.Range(1 - _pitchChangeMultiplier, 1 + _pitchChangeMultiplier);
+        _audioSource.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
+        _audioSource.volume = UnityEngine.Random.Range(1 - _volumeChangeMultiplier, 1);
+        _audioSource.pitch = UnityEngine.Random.Range(1 - _pitchChangeMultiplier, 1 + _pitchChangeMultiplier);
         _audioSource.PlayOneShot(_audioSource.clip);
     }
-
-    // Input Action Messages
 
     public void OnMove(InputValue value)
     {
@@ -206,19 +229,18 @@ public class Movement : MonoBehaviour
     public void OnGrabObject(InputValue value)
     {
         _isGrabPressed = value.isPressed;
-        CheckObjectGrabbed();
+        CheckInteractPopup();
     }
 
-    void CheckObjectGrabbed()
+    // Maybe will need to be generalized?
+    private void CheckInteractPopup()
     {
-        _grabbedObject = Physics.CheckSphere(_groundCheck.position, 1f, _whatIsGrabbable);
-        if (_grabbedObject)
+        if (_isCollidingPopup)
         {
-            GrabObject();
+            GrabbedObject.Invoke();
         }
-        Debug.Log("Here" + _grabbedObject);
-
     }
+
     public void OnCollisionStay(Collision collidedObject)
     {
         //Debug.Log(collidedObject.collider.name);

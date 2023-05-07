@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PopupSystem : MonoBehaviour
@@ -11,20 +12,26 @@ public class PopupSystem : MonoBehaviour
 
     private void Awake()
     {
-        Popup.EnteredPopup += OpenPopup;
-        Popup.LeftPopup += ClosePopup;
+        Popup.EnteredPopup += SetPopup; // I use the same event that lets the character controller something is being touched, set the message of the collider that was touched
+        CharacterController.GrabbedObject += OpenPopup; // I use the character saying something was grabbed to open it
+        Popup.LeftPopup += ClosePopup; // And then the popup leaving the area to close it...Or maybe the player closes it?
     }
 
     private void OnDisable()
     {
-        Popup.EnteredPopup -= OpenPopup;
+        Popup.EnteredPopup -= SetPopup;
+        CharacterController.GrabbedObject -= OpenPopup;
         Popup.LeftPopup -= ClosePopup;
     }
 
-    private void OpenPopup(string text)
+    private void SetPopup(string text)
     {
-        print("Popping");
+        print("Setting popup: " + text);
         popupText.text = text;
+    }
+    private void OpenPopup()
+    {
+        print("Openning popup");
         popupBox.SetActive(true);
         animator.SetTrigger("Pop");
     }
@@ -33,5 +40,6 @@ public class PopupSystem : MonoBehaviour
     {
         print("Unpopping");
         animator.SetTrigger("Close");
+        popupBox.SetActive(false);
     }
 }
